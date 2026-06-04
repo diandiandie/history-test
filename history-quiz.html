@@ -1,0 +1,1156 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>中国历史文化小测验</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #202124;
+      --muted: #6a6258;
+      --paper: #fbf7ee;
+      --panel: #fffdf8;
+      --line: #ded2bf;
+      --red: #9c2f2f;
+      --red-deep: #732424;
+      --gold: #b27a24;
+      --green: #42715c;
+      --blue: #405f86;
+      --shadow: 0 18px 50px rgba(45, 32, 19, 0.14);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans SC", Arial, sans-serif;
+      color: var(--ink);
+      background:
+        linear-gradient(120deg, rgba(156, 47, 47, 0.10), transparent 32%),
+        linear-gradient(300deg, rgba(64, 95, 134, 0.13), transparent 38%),
+        var(--paper);
+    }
+
+    main {
+      width: min(1040px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 34px 0 42px;
+    }
+
+    .masthead {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 26px;
+      align-items: stretch;
+      min-height: 270px;
+      margin-bottom: 22px;
+    }
+
+    .intro {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 28px 0;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      width: fit-content;
+      align-items: center;
+      gap: 8px;
+      color: var(--red-deep);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0;
+      border-bottom: 2px solid rgba(156, 47, 47, 0.25);
+      padding-bottom: 6px;
+    }
+
+    h1 {
+      margin: 18px 0 12px;
+      font-family: "STSong", "SimSun", serif;
+      font-size: clamp(36px, 7vw, 68px);
+      line-height: 1.02;
+      letter-spacing: 0;
+      color: #231b17;
+    }
+
+    .lead {
+      margin: 0;
+      max-width: 650px;
+      color: #4f463d;
+      font-size: 17px;
+      line-height: 1.85;
+    }
+
+    .visual {
+      position: relative;
+      overflow: hidden;
+      min-height: 260px;
+      border: 1px solid rgba(92, 65, 38, 0.18);
+      box-shadow: var(--shadow);
+      background:
+        radial-gradient(circle at 74% 30%, rgba(255, 236, 187, 0.85) 0 10%, transparent 11%),
+        linear-gradient(180deg, rgba(67, 96, 128, 0.35), rgba(236, 216, 178, 0.22)),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='560' viewBox='0 0 900 560'%3E%3Crect width='900' height='560' fill='%23e9dcc3'/%3E%3Cpath d='M0 405 C120 355 210 376 315 330 C454 268 572 302 710 242 C780 213 839 190 900 202 L900 560 L0 560 Z' fill='%23788b78' opacity='.58'/%3E%3Cpath d='M0 462 C105 415 185 432 292 396 C428 350 560 364 703 319 C783 294 835 284 900 301 L900 560 L0 560 Z' fill='%234e735f' opacity='.56'/%3E%3Cpath d='M0 509 C135 464 249 481 360 451 C496 414 623 416 738 390 C810 374 858 368 900 382 L900 560 L0 560 Z' fill='%232f4c43' opacity='.72'/%3E%3Cpath d='M264 235 L352 197 L445 235 Z' fill='%236b2e28'/%3E%3Crect x='287' y='235' width='135' height='92' fill='%239f3a2e'/%3E%3Cpath d='M262 326 H448 L431 356 H281 Z' fill='%236c5542'/%3E%3Cpath d='M534 170 L636 125 L742 170 Z' fill='%235b2b2b'/%3E%3Crect x='563' y='170' width='148' height='102' fill='%238c312c'/%3E%3Cpath d='M529 272 H750 L724 306 H555 Z' fill='%23675345'/%3E%3Cpath d='M125 342 H210 M151 309 H229 M602 337 H724 M618 365 H759' stroke='%23f2dfb9' stroke-width='10' stroke-linecap='round' opacity='.65'/%3E%3Cpath d='M94 155 C151 131 194 130 239 157 M62 193 C130 166 201 168 261 196 M658 82 C706 58 754 62 800 91' stroke='%237c6752' stroke-width='7' fill='none' opacity='.5'/%3E%3C/svg%3E");
+      background-size: cover;
+      background-position: center;
+    }
+
+    .visual::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(35, 27, 23, 0.10), rgba(255, 255, 255, 0.05));
+    }
+
+    .quiz-shell {
+      background: rgba(255, 253, 248, 0.88);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(8px);
+    }
+
+    .status {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      align-items: center;
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .progress-track {
+      height: 10px;
+      overflow: hidden;
+      background: #ece2d2;
+      border: 1px solid #dbcab2;
+    }
+
+    .progress-bar {
+      width: 0;
+      height: 100%;
+      background: linear-gradient(90deg, var(--red), var(--gold));
+      transition: width 240ms ease;
+    }
+
+    .count {
+      min-width: 88px;
+      color: var(--muted);
+      font-weight: 700;
+      text-align: right;
+    }
+
+    .question-area {
+      padding: 24px 22px 26px;
+    }
+
+    .question-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 4px 10px;
+      color: #573e2a;
+      background: #f3e6d0;
+      border: 1px solid #dcc7a7;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .question {
+      margin: 0 0 20px;
+      font-size: 25px;
+      line-height: 1.48;
+      font-weight: 800;
+      color: #261e1a;
+    }
+
+    .options {
+      display: grid;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .option {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      gap: 12px;
+      align-items: center;
+      min-height: 58px;
+      padding: 12px 14px;
+      cursor: pointer;
+      color: #2c2722;
+      background: #fffaf1;
+      border: 1px solid #d8c5aa;
+      font: inherit;
+      text-align: left;
+      transition: transform 120ms ease, border-color 120ms ease, background 120ms ease;
+    }
+
+    .option:hover:not(:disabled),
+    .option:focus-visible {
+      border-color: var(--red);
+      background: #fff5df;
+      transform: translateY(-1px);
+      outline: none;
+    }
+
+    .option:disabled {
+      cursor: default;
+    }
+
+    .option.correct {
+      border-color: var(--green);
+      background: #eef7ed;
+    }
+
+    .option.wrong {
+      border-color: var(--red);
+      background: #fbe8e4;
+    }
+
+    .letter {
+      display: grid;
+      place-items: center;
+      width: 32px;
+      height: 32px;
+      color: #fff;
+      background: #735942;
+      font-weight: 800;
+    }
+
+    .option.correct .letter {
+      background: var(--green);
+    }
+
+    .option.wrong .letter {
+      background: var(--red);
+    }
+
+    .explain {
+      min-height: 82px;
+      padding: 14px 16px;
+      color: #41382f;
+      background: #f6eddd;
+      border-left: 5px solid var(--gold);
+      line-height: 1.75;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    button.primary,
+    button.secondary {
+      min-height: 46px;
+      padding: 0 18px;
+      border: 0;
+      cursor: pointer;
+      font: inherit;
+      font-weight: 800;
+    }
+
+    button.primary {
+      color: #fff;
+      background: var(--red);
+    }
+
+    button.primary:hover:not(:disabled) {
+      background: var(--red-deep);
+    }
+
+    button.secondary {
+      color: var(--red-deep);
+      background: transparent;
+      border: 1px solid rgba(156, 47, 47, 0.35);
+    }
+
+    button:disabled {
+      opacity: 0.46;
+      cursor: not-allowed;
+    }
+
+    .result {
+      display: none;
+      padding: 26px 22px 30px;
+    }
+
+    .result.show {
+      display: block;
+    }
+
+    .result-layout {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .score-box {
+      padding: 22px;
+      background: #fffaf1;
+      border: 1px solid var(--line);
+    }
+
+    .score-num {
+      margin: 8px 0;
+      font-size: clamp(48px, 8vw, 84px);
+      line-height: 1;
+      color: var(--red-deep);
+      font-weight: 900;
+    }
+
+    .level {
+      margin: 0 0 12px;
+      color: #241c18;
+      font-size: 28px;
+      font-weight: 900;
+    }
+
+    .comment {
+      margin: 0;
+      color: #4f463d;
+      line-height: 1.8;
+    }
+
+    .breakdown {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .breakdown li {
+      padding: 12px 14px;
+      border: 1px solid #e0d2be;
+      background: #fffdf8;
+      line-height: 1.55;
+    }
+
+    .breakdown strong {
+      color: var(--blue);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    @media (max-width: 780px) {
+      main {
+        width: min(100% - 22px, 1040px);
+        padding-top: 18px;
+      }
+
+      .masthead,
+      .result-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .intro {
+        padding: 8px 0 0;
+      }
+
+      .visual {
+        min-height: 190px;
+      }
+
+      .status {
+        grid-template-columns: 1fr;
+      }
+
+      .count {
+        text-align: left;
+      }
+
+      .question {
+        font-size: 21px;
+      }
+
+      .option {
+        grid-template-columns: 30px 1fr;
+      }
+
+      .actions {
+        flex-direction: column-reverse;
+      }
+
+      button.primary,
+      button.secondary {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="masthead" aria-labelledby="page-title">
+      <div class="intro">
+        <div class="eyebrow">历史文化 · 十题挑战</div>
+        <h1 id="page-title">中国历史文化小测验</h1>
+        <p class="lead">从朝代更替、制度典故到诗文器物，看看你的历史文化雷达能捕捉到多少线索。刷到满分时，会解锁最顶级的称号与评价。</p>
+      </div>
+      <div class="visual" role="img" aria-label="山水、宫殿与古代建筑组成的历史文化场景"></div>
+    </section>
+
+    <section class="quiz-shell" aria-live="polite">
+      <div id="quiz">
+        <div class="status">
+          <div class="progress-track" aria-label="答题进度">
+            <div class="progress-bar" id="progressBar"></div>
+          </div>
+          <div class="count" id="countText">第 1 / 10 题</div>
+        </div>
+
+        <div class="question-area">
+          <div class="question-meta">
+            <span class="tag" id="eraTag">朝代线索</span>
+            <span class="tag" id="topicTag">文化常识</span>
+          </div>
+          <h2 class="question" id="questionText"></h2>
+          <div class="options" id="options"></div>
+          <div class="explain" id="explain">请选择一个答案。每题答完会给出一句解释。</div>
+          <div class="actions">
+            <button class="secondary" id="restartBtn" type="button">重新开始</button>
+            <button class="primary" id="nextBtn" type="button" disabled>下一题</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="result" id="result">
+        <div class="result-layout">
+          <div class="score-box">
+            <div class="eyebrow">测验结果</div>
+            <div class="score-num" id="scoreNum">0</div>
+            <h2 class="level" id="levelText"></h2>
+            <p class="comment" id="commentText"></p>
+            <div class="actions">
+              <button class="primary" id="againBtn" type="button">再测一次</button>
+            </div>
+          </div>
+          <ul class="breakdown" id="breakdown"></ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const baseQuestions = [
+      {
+        era: "先秦",
+        topic: "思想流派",
+        text: "“兼爱”“非攻”最能代表哪一家的主张？",
+        options: ["儒家", "墨家", "法家", "道家"],
+        answer: 1,
+        explain: "墨家强调兼爱、非攻、尚贤、节用，带有鲜明的社会实践色彩。"
+      },
+      {
+        era: "秦汉",
+        topic: "制度常识",
+        text: "秦始皇统一六国后，在地方推行的主要行政制度是？",
+        options: ["分封制", "郡县制", "行省制", "三省六部制"],
+        answer: 1,
+        explain: "秦朝以郡县制替代传统分封倾向，加强中央对地方的直接控制。"
+      },
+      {
+        era: "汉代",
+        topic: "丝路记忆",
+        text: "出使西域、为丝绸之路开通奠定重要基础的人物是？",
+        options: ["班超", "张骞", "卫青", "司马相如"],
+        answer: 1,
+        explain: "张骞两次出使西域，扩大了汉朝对西域的认识，也推动了东西交通。"
+      },
+      {
+        era: "魏晋",
+        topic: "文学风骨",
+        text: "“采菊东篱下，悠然见南山”出自哪位诗人？",
+        options: ["陶渊明", "谢灵运", "曹植", "王羲之"],
+        answer: 0,
+        explain: "陶渊明以田园诗著称，这句诗体现了归隐后的闲适与自守。"
+      },
+      {
+        era: "隋唐",
+        topic: "选官制度",
+        text: "隋唐以后影响深远、以考试取士为核心的制度是？",
+        options: ["察举制", "九品中正制", "科举制", "世卿世禄制"],
+        answer: 2,
+        explain: "科举制扩大了人才选拔渠道，成为中国古代政治文化的重要制度。"
+      },
+      {
+        era: "唐代",
+        topic: "盛世人物",
+        text: "被称为“诗圣”的唐代诗人是？",
+        options: ["李白", "杜甫", "白居易", "王维"],
+        answer: 1,
+        explain: "杜甫诗歌深切记录时代忧患，被后世尊为“诗圣”。"
+      },
+      {
+        era: "宋代",
+        topic: "城市生活",
+        text: "《清明上河图》主要描绘的是哪座城市的市井风貌？",
+        options: ["长安", "临安", "汴京", "洛阳"],
+        answer: 2,
+        explain: "《清明上河图》通常被认为描绘北宋都城汴京的繁华景象。"
+      },
+      {
+        era: "元代",
+        topic: "地方治理",
+        text: "元朝在地方行政上影响后世最深的制度之一是？",
+        options: ["郡国并行", "行省制度", "里甲制度", "猛安谋克"],
+        answer: 1,
+        explain: "元代行省制度对后来省级行政区划的发展有重要影响。"
+      },
+      {
+        era: "明清",
+        topic: "小说名著",
+        text: "下列哪部作品通常被列入中国古典“四大名著”？",
+        options: ["《聊斋志异》", "《儒林外史》", "《红楼梦》", "《牡丹亭》"],
+        answer: 2,
+        explain: "《红楼梦》与《三国演义》《水浒传》《西游记》并称四大名著。"
+      },
+      {
+        era: "综合",
+        topic: "文物器用",
+        text: "“青铜器”在商周礼制文化中最常见的核心用途之一是？",
+        options: ["远洋航行", "礼仪祭祀", "雕版印刷", "纸币流通"],
+        answer: 1,
+        explain: "商周青铜器常用于祭祀、宴飨和等级身份表达，是礼制文化的重要载体。"
+      },
+      {
+        era: "夏商周",
+        topic: "青铜铭文",
+        text: "研究商周历史时，青铜器上的文字通常被称为？",
+        options: ["甲骨文", "金文", "小篆", "隶书"],
+        answer: 1,
+        explain: "金文多铸刻在青铜器上，是研究西周政治、礼制和家族关系的重要材料。"
+      },
+      {
+        era: "先秦",
+        topic: "经典文本",
+        text: "“民为贵，社稷次之，君为轻”通常与哪位思想家相关？",
+        options: ["孔子", "孟子", "荀子", "韩非子"],
+        answer: 1,
+        explain: "孟子重视民本思想，这句话集中体现了他对君民关系的判断。"
+      },
+      {
+        era: "战国",
+        topic: "改革变法",
+        text: "战国时期在秦国主持变法、推动秦国强盛的人物是？",
+        options: ["吴起", "商鞅", "李悝", "范雎"],
+        answer: 1,
+        explain: "商鞅变法强化法令、军功爵和县制，为秦国后来统一奠定制度基础。"
+      },
+      {
+        era: "秦代",
+        topic: "文字统一",
+        text: "秦统一后推行的标准文字主要是？",
+        options: ["大篆", "小篆", "楷书", "草书"],
+        answer: 1,
+        explain: "秦以小篆作为规范文字，有助于统一政令和行政文书。"
+      },
+      {
+        era: "汉代",
+        topic: "史学名著",
+        text: "《史记》的作者是？",
+        options: ["班固", "司马迁", "司马光", "陈寿"],
+        answer: 1,
+        explain: "司马迁撰写《史记》，开创纪传体通史传统。"
+      },
+      {
+        era: "东汉",
+        topic: "科技发明",
+        text: "改进造纸术、使纸张更适合广泛使用的人物通常被认为是？",
+        options: ["张衡", "蔡伦", "祖冲之", "毕昇"],
+        answer: 1,
+        explain: "蔡伦改进造纸工艺，推动书写材料变革，对文化传播影响深远。"
+      },
+      {
+        era: "三国",
+        topic: "历史人物",
+        text: "“隆中对”与哪位人物的战略构想关系最密切？",
+        options: ["诸葛亮", "周瑜", "司马懿", "鲁肃"],
+        answer: 0,
+        explain: "诸葛亮在隆中为刘备分析天下形势，提出联吴抗曹、据荆益的战略方向。"
+      },
+      {
+        era: "魏晋",
+        topic: "书法艺术",
+        text: "被后世尊为“书圣”的是？",
+        options: ["颜真卿", "王羲之", "柳公权", "欧阳询"],
+        answer: 1,
+        explain: "王羲之书法影响深远，《兰亭序》尤其被视为行书名作。"
+      },
+      {
+        era: "南北朝",
+        topic: "石窟艺术",
+        text: "云冈石窟主要位于今天的哪个省？",
+        options: ["河南", "山西", "甘肃", "陕西"],
+        answer: 1,
+        explain: "云冈石窟位于山西大同，是北魏佛教艺术的重要遗存。"
+      },
+      {
+        era: "隋代",
+        topic: "工程交通",
+        text: "隋朝开凿大运河的重要目的之一是？",
+        options: ["连接南北交通", "防御海上入侵", "开采西域矿产", "修筑草原长城"],
+        answer: 0,
+        explain: "大运河加强南北物资运输和政治联系，对后世经济格局影响很大。"
+      },
+      {
+        era: "唐代",
+        topic: "中外交流",
+        text: "唐代高僧玄奘西行取经后撰成的见闻著作是？",
+        options: ["《大唐西域记》", "《佛国记》", "《徐霞客游记》", "《岛夷志略》"],
+        answer: 0,
+        explain: "《大唐西域记》记录了玄奘西行所见，为研究中亚、南亚历史提供资料。"
+      },
+      {
+        era: "唐代",
+        topic: "政治制度",
+        text: "唐代中央政务运行中，“三省”通常不包括哪一项？",
+        options: ["中书省", "门下省", "尚书省", "行中书省"],
+        answer: 3,
+        explain: "唐代三省为中书、门下、尚书；行中书省是元代地方行政体系的重要名称。"
+      },
+      {
+        era: "五代宋元",
+        topic: "印刷传播",
+        text: "活字印刷术的发明者通常认为是北宋的？",
+        options: ["沈括", "毕昇", "苏颂", "郭守敬"],
+        answer: 1,
+        explain: "毕昇发明泥活字印刷术，沈括在《梦溪笔谈》中有相关记载。"
+      },
+      {
+        era: "宋代",
+        topic: "理学思想",
+        text: "南宋理学集大成者通常指？",
+        options: ["朱熹", "陆九渊", "王阳明", "周敦颐"],
+        answer: 0,
+        explain: "朱熹整理阐发理学体系，对后世教育、科举和思想文化影响极大。"
+      },
+      {
+        era: "宋代",
+        topic: "文学体裁",
+        text: "宋代文学中最具时代代表性的文体之一是？",
+        options: ["楚辞", "汉赋", "宋词", "元曲"],
+        answer: 2,
+        explain: "宋词在宋代高度繁荣，苏轼、李清照、辛弃疾等都是代表人物。"
+      },
+      {
+        era: "元代",
+        topic: "天文历法",
+        text: "主持编制《授时历》的元代科学家是？",
+        options: ["郭守敬", "张衡", "僧一行", "徐光启"],
+        answer: 0,
+        explain: "郭守敬主持编制《授时历》，体现了元代天文历法的高水平。"
+      },
+      {
+        era: "元代",
+        topic: "戏曲文学",
+        text: "《窦娥冤》的作者是？",
+        options: ["关汉卿", "马致远", "白朴", "郑光祖"],
+        answer: 0,
+        explain: "关汉卿是元杂剧代表作家，《窦娥冤》是其代表作。"
+      },
+      {
+        era: "明代",
+        topic: "航海交流",
+        text: "明成祖时期七下西洋的航海家是？",
+        options: ["郑和", "汪大渊", "徐福", "戚继光"],
+        answer: 0,
+        explain: "郑和下西洋展示了明初强大的组织能力，也促进了海上交流。"
+      },
+      {
+        era: "明代",
+        topic: "医学典籍",
+        text: "《本草纲目》的作者是？",
+        options: ["孙思邈", "李时珍", "张仲景", "华佗"],
+        answer: 1,
+        explain: "李时珍撰写《本草纲目》，系统总结了本草学知识。"
+      },
+      {
+        era: "明代",
+        topic: "军事人物",
+        text: "明代抗倭名将、“戚家军”的创建者是？",
+        options: ["岳飞", "戚继光", "袁崇焕", "郑成功"],
+        answer: 1,
+        explain: "戚继光训练戚家军，在东南沿海抗倭斗争中战功卓著。"
+      },
+      {
+        era: "清代",
+        topic: "学术工程",
+        text: "清代乾隆年间编纂的大型丛书是？",
+        options: ["《永乐大典》", "《四库全书》", "《太平御览》", "《册府元龟》"],
+        answer: 1,
+        explain: "《四库全书》是清代大型文献整理工程，规模宏大。"
+      },
+      {
+        era: "清代",
+        topic: "小说艺术",
+        text: "《聊斋志异》的作者是？",
+        options: ["蒲松龄", "吴敬梓", "曹雪芹", "纪昀"],
+        answer: 0,
+        explain: "蒲松龄以文言短篇小说写狐鬼花妖，寄寓人情世态。"
+      },
+      {
+        era: "清代",
+        topic: "思想文化",
+        text: "提出“师夷长技以制夷”的近代思想家是？",
+        options: ["魏源", "林则徐", "龚自珍", "康有为"],
+        answer: 0,
+        explain: "魏源在《海国图志》中提出这一主张，体现了睁眼看世界的转向。"
+      },
+      {
+        era: "近代",
+        topic: "重大事件",
+        text: "中国近代史的开端通常以哪场战争为标志？",
+        options: ["甲午战争", "鸦片战争", "八国联军侵华", "中法战争"],
+        answer: 1,
+        explain: "1840年的鸦片战争通常被视为中国近代史开端。"
+      },
+      {
+        era: "近代",
+        topic: "制度变革",
+        text: "标志清帝退位、两千多年君主专制制度终结的革命是？",
+        options: ["太平天国运动", "戊戌变法", "辛亥革命", "义和团运动"],
+        answer: 2,
+        explain: "辛亥革命推翻清朝统治，结束了中国两千多年君主专制制度。"
+      },
+      {
+        era: "综合",
+        topic: "地理古称",
+        text: "“金陵”是哪座城市的古称之一？",
+        options: ["南京", "杭州", "西安", "开封"],
+        answer: 0,
+        explain: "南京有金陵、建康、应天等古称，是中国历史名城。"
+      },
+      {
+        era: "综合",
+        topic: "节日文化",
+        text: "端午节与哪位历史人物的纪念传说关系最密切？",
+        options: ["屈原", "伍子胥", "介子推", "范蠡"],
+        answer: 0,
+        explain: "端午习俗来源复杂，但与纪念屈原的传说最为大众熟知。"
+      },
+      {
+        era: "综合",
+        topic: "诗文典故",
+        text: "“先天下之忧而忧，后天下之乐而乐”出自哪篇文章？",
+        options: ["《岳阳楼记》", "《醉翁亭记》", "《出师表》", "《滕王阁序》"],
+        answer: 0,
+        explain: "这句话出自范仲淹《岳阳楼记》，体现士大夫的家国担当。"
+      },
+      {
+        era: "综合",
+        topic: "书画鉴赏",
+        text: "“颜筋柳骨”中的“柳”指的是哪位书法家？",
+        options: ["柳宗元", "柳公权", "柳永", "柳如是"],
+        answer: 1,
+        explain: "“颜筋柳骨”分别指颜真卿和柳公权的书法风格。"
+      },
+      {
+        era: "综合",
+        topic: "考古发现",
+        text: "甲骨文大量发现于今天河南安阳的哪一遗址？",
+        options: ["殷墟", "二里头", "良渚", "三星堆"],
+        answer: 0,
+        explain: "殷墟甲骨文是研究商代历史和早期文字的重要材料。"
+      },
+      {
+        era: "综合",
+        topic: "世界遗产",
+        text: "秦始皇陵兵马俑主要位于今天的哪座城市附近？",
+        options: ["洛阳", "西安", "咸阳", "开封"],
+        answer: 1,
+        explain: "兵马俑位于陕西西安临潼，是秦代考古的重要发现。"
+      },
+      {
+        era: "综合",
+        topic: "古代科技",
+        text: "中国古代“四大发明”不包括下列哪一项？",
+        options: ["造纸术", "指南针", "火药", "地动仪"],
+        answer: 3,
+        explain: "四大发明通常指造纸术、印刷术、火药和指南针。"
+      },
+      {
+        era: "综合",
+        topic: "农业著作",
+        text: "北魏贾思勰撰写的农业著作是？",
+        options: ["《齐民要术》", "《天工开物》", "《农政全书》", "《梦溪笔谈》"],
+        answer: 0,
+        explain: "《齐民要术》系统总结北方农业生产经验，是重要农学著作。"
+      },
+      {
+        era: "综合",
+        topic: "工艺百科",
+        text: "明末宋应星所著、被称为“中国17世纪工艺百科全书”的是？",
+        options: ["《天工开物》", "《水经注》", "《营造法式》", "《考工记》"],
+        answer: 0,
+        explain: "《天工开物》记录农业、手工业和矿冶等技术，资料价值很高。"
+      }
+    ];
+
+    const pairFacts = [
+      ["先秦", "思想流派", "孔子", "儒家创始人", "孔子开创儒家传统，重视仁、礼与教育。"],
+      ["先秦", "思想流派", "孟子", "民本思想代表", "孟子发展儒家思想，提出民贵君轻等主张。"],
+      ["先秦", "思想流派", "老子", "道家代表人物", "老子思想重视道、自然与无为。"],
+      ["先秦", "思想流派", "庄子", "道家文学哲思代表", "庄子文章想象奇特，善用寓言表达哲思。"],
+      ["先秦", "思想流派", "墨子", "兼爱非攻", "墨家主张兼爱、非攻、尚贤、节用。"],
+      ["先秦", "思想流派", "韩非", "法家集大成者", "韩非强调法、术、势，是法家代表人物。"],
+      ["先秦", "思想流派", "荀子", "性恶论", "荀子重视礼法和后天教化，提出性恶论。"],
+      ["先秦", "思想流派", "孙武", "《孙子兵法》", "《孙子兵法》是中国古代兵学经典。"],
+      ["先秦", "经典文献", "《诗经》", "中国最早诗歌总集", "《诗经》收录西周至春秋时期诗歌。"],
+      ["先秦", "经典文献", "《尚书》", "上古政治文献汇编", "《尚书》保存了许多古代政事文献。"],
+      ["先秦", "经典文献", "《春秋》", "鲁国编年史", "《春秋》是重要的编年体史书传统源头。"],
+      ["先秦", "经典文献", "《楚辞》", "屈原作品传统", "《楚辞》具有浓厚楚地文化色彩。"],
+      ["秦汉", "制度人物", "秦始皇", "统一六国", "秦始皇完成统一，建立中央集权国家。"],
+      ["秦汉", "制度人物", "李斯", "小篆规范推动者", "李斯参与秦代文字、制度统一。"],
+      ["秦汉", "制度人物", "刘邦", "建立西汉", "刘邦击败项羽后建立汉朝。"],
+      ["秦汉", "制度人物", "汉武帝", "罢黜百家独尊儒术", "汉武帝时期加强中央集权并尊崇儒学。"],
+      ["秦汉", "制度人物", "张骞", "出使西域", "张骞出使西域推动东西交通。"],
+      ["秦汉", "制度人物", "司马迁", "《史记》作者", "司马迁撰写纪传体通史《史记》。"],
+      ["秦汉", "制度人物", "班固", "《汉书》作者", "班固撰写纪传体断代史《汉书》。"],
+      ["秦汉", "制度人物", "蔡伦", "改进造纸术", "蔡伦改进造纸工艺，促进文化传播。"],
+      ["魏晋南北朝", "人物文化", "曹操", "建安文学代表", "曹操是政治军事人物，也是建安文学代表。"],
+      ["魏晋南北朝", "人物文化", "曹植", "七步诗传说", "曹植文才出众，是建安文学重要作家。"],
+      ["魏晋南北朝", "人物文化", "陶渊明", "田园诗代表", "陶渊明以田园诗和归隐精神著称。"],
+      ["魏晋南北朝", "人物文化", "王羲之", "书圣", "王羲之书法影响深远，被尊为书圣。"],
+      ["魏晋南北朝", "人物文化", "顾恺之", "《洛神赋图》传统", "顾恺之是东晋著名画家。"],
+      ["魏晋南北朝", "人物文化", "祖冲之", "圆周率研究", "祖冲之在数学和天文历法方面成就突出。"],
+      ["魏晋南北朝", "人物文化", "贾思勰", "《齐民要术》作者", "贾思勰撰写重要农学著作《齐民要术》。"],
+      ["魏晋南北朝", "人物文化", "郦道元", "《水经注》作者", "《水经注》是地理学名著。"],
+      ["隋唐", "盛世气象", "隋文帝", "开皇之治", "隋文帝时期整顿制度，出现开皇之治。"],
+      ["隋唐", "盛世气象", "隋炀帝", "大运河", "隋炀帝时期大运河工程影响深远。"],
+      ["隋唐", "盛世气象", "唐太宗", "贞观之治", "唐太宗善于纳谏，开创贞观之治。"],
+      ["隋唐", "盛世气象", "武则天", "中国历史上唯一女皇帝", "武则天是中国历史上唯一正式称帝的女性。"],
+      ["隋唐", "盛世气象", "唐玄宗", "开元盛世", "唐玄宗前期政治清明，出现开元盛世。"],
+      ["隋唐", "盛世气象", "玄奘", "《大唐西域记》", "玄奘西行取经，相关见闻见于《大唐西域记》。"],
+      ["隋唐", "盛世气象", "鉴真", "东渡日本", "鉴真东渡推动中日佛教和文化交流。"],
+      ["隋唐", "盛世气象", "颜真卿", "楷书大家", "颜真卿书法雄浑，被称为颜体。"],
+      ["唐宋文学", "诗词文人", "李白", "诗仙", "李白诗风豪放飘逸，被称为诗仙。"],
+      ["唐宋文学", "诗词文人", "杜甫", "诗圣", "杜甫诗歌深沉记录时代，被称为诗圣。"],
+      ["唐宋文学", "诗词文人", "白居易", "新乐府运动", "白居易诗歌通俗晓畅，倡导新乐府。"],
+      ["唐宋文学", "诗词文人", "王维", "诗中有画", "王维诗画兼擅，山水田园诗成就高。"],
+      ["唐宋文学", "诗词文人", "韩愈", "古文运动", "韩愈倡导古文运动，是唐宋八大家之一。"],
+      ["唐宋文学", "诗词文人", "柳宗元", "山水游记名家", "柳宗元散文成就突出，是唐宋八大家之一。"],
+      ["唐宋文学", "诗词文人", "范仲淹", "《岳阳楼记》", "范仲淹《岳阳楼记》名句流传极广。"],
+      ["唐宋文学", "诗词文人", "欧阳修", "北宋文坛领袖", "欧阳修推动北宋诗文革新。"],
+      ["唐宋文学", "诗词文人", "苏轼", "豪放词代表", "苏轼诗词文书画俱佳，是豪放词代表。"],
+      ["唐宋文学", "诗词文人", "李清照", "婉约词代表", "李清照词作细腻深婉，是婉约词代表。"],
+      ["唐宋文学", "诗词文人", "辛弃疾", "爱国词人", "辛弃疾词风豪放，家国情怀强烈。"],
+      ["唐宋文学", "诗词文人", "陆游", "南宋爱国诗人", "陆游诗作数量多，爱国主题鲜明。"],
+      ["宋元", "科技制度", "毕昇", "活字印刷术", "毕昇发明泥活字印刷术。"],
+      ["宋元", "科技制度", "沈括", "《梦溪笔谈》", "沈括《梦溪笔谈》记录多领域知识。"],
+      ["宋元", "科技制度", "朱熹", "理学集大成者", "朱熹整理阐发理学体系。"],
+      ["宋元", "科技制度", "司马光", "《资治通鉴》主编", "司马光主持编纂编年体通史《资治通鉴》。"],
+      ["宋元", "科技制度", "关汉卿", "《窦娥冤》", "关汉卿是元杂剧代表作家。"],
+      ["宋元", "科技制度", "马致远", "《天净沙·秋思》", "马致远小令《天净沙·秋思》脍炙人口。"],
+      ["宋元", "科技制度", "郭守敬", "《授时历》", "郭守敬主持编制《授时历》。"],
+      ["宋元", "科技制度", "文天祥", "《正气歌》", "文天祥以忠烈气节和《正气歌》闻名。"],
+      ["明清", "小说科技", "罗贯中", "《三国演义》", "《三国演义》是历史演义小说代表。"],
+      ["明清", "小说科技", "施耐庵", "《水浒传》", "《水浒传》描写梁山好汉故事。"],
+      ["明清", "小说科技", "吴承恩", "《西游记》", "《西游记》是神魔小说经典。"],
+      ["明清", "小说科技", "曹雪芹", "《红楼梦》", "《红楼梦》是中国古典小说高峰之一。"],
+      ["明清", "小说科技", "蒲松龄", "《聊斋志异》", "《聊斋志异》以文言短篇写狐鬼人情。"],
+      ["明清", "小说科技", "吴敬梓", "《儒林外史》", "《儒林外史》讽刺科举与士林风气。"],
+      ["明清", "小说科技", "汤显祖", "《牡丹亭》", "《牡丹亭》是明代传奇名作。"],
+      ["明清", "小说科技", "李时珍", "《本草纲目》", "李时珍系统总结本草学知识。"],
+      ["明清", "小说科技", "宋应星", "《天工开物》", "《天工开物》记录明代工艺技术。"],
+      ["明清", "小说科技", "徐光启", "《农政全书》", "徐光启重视农业、水利和中西学术交流。"],
+      ["明清", "历史人物", "郑和", "七下西洋", "郑和下西洋促进海上交流。"],
+      ["明清", "历史人物", "戚继光", "抗倭名将", "戚继光创建戚家军抗击倭寇。"],
+      ["明清", "历史人物", "郑成功", "收复台湾", "郑成功驱逐荷兰殖民者，收复台湾。"],
+      ["明清", "历史人物", "康熙帝", "平定三藩", "康熙时期平定三藩并加强统一多民族国家。"],
+      ["明清", "历史人物", "乾隆帝", "《四库全书》", "乾隆时期组织编纂《四库全书》。"],
+      ["明清", "历史人物", "林则徐", "虎门销烟", "林则徐主持虎门销烟，反对鸦片输入。"],
+      ["明清", "历史人物", "魏源", "《海国图志》", "魏源提出师夷长技以制夷。"],
+      ["明清", "历史人物", "康有为", "戊戌变法代表", "康有为是维新变法的重要人物。"],
+      ["近现代", "近代转折", "孙中山", "辛亥革命先驱", "孙中山是民主革命先行者。"],
+      ["近现代", "近代转折", "陈独秀", "新文化运动代表", "陈独秀是新文化运动重要人物。"],
+      ["近现代", "近代转折", "鲁迅", "《狂人日记》", "鲁迅《狂人日记》是现代白话小说重要作品。"],
+      ["近现代", "近代转折", "詹天佑", "京张铁路", "詹天佑主持修建京张铁路。"],
+      ["近现代", "近代转折", "梁启超", "维新思想宣传家", "梁启超推动维新思想传播。"],
+      ["近现代", "近代转折", "严复", "翻译《天演论》", "严复翻译《天演论》，传播进化论思想。"],
+      ["近现代", "近代转折", "张謇", "实业救国", "张謇倡导实业救国，兴办企业教育。"],
+      ["近现代", "近代转折", "蔡元培", "北大教育改革", "蔡元培任北大校长时推动思想自由和兼容并包。"],
+      ["文化遗产", "古城遗址", "殷墟", "甲骨文重要发现地", "殷墟是商代晚期都城遗址。"],
+      ["文化遗产", "古城遗址", "三星堆", "古蜀文明遗址", "三星堆展现了独特的古蜀文明面貌。"],
+      ["文化遗产", "古城遗址", "良渚遗址", "玉器与早期国家文明", "良渚遗址体现长江下游史前文明高度。"],
+      ["文化遗产", "古城遗址", "秦兵马俑", "秦始皇陵陪葬坑", "兵马俑展示秦代军阵与雕塑艺术。"],
+      ["文化遗产", "古城遗址", "敦煌莫高窟", "佛教石窟艺术宝库", "莫高窟保存大量壁画和彩塑。"],
+      ["文化遗产", "古城遗址", "云冈石窟", "北魏石窟艺术", "云冈石窟位于山西大同。"],
+      ["文化遗产", "古城遗址", "龙门石窟", "洛阳佛教石窟", "龙门石窟位于河南洛阳。"],
+      ["文化遗产", "古城遗址", "都江堰", "战国水利工程", "都江堰由李冰父子主持修建，沿用至今。"],
+      ["文化常识", "节日地名", "端午节", "纪念屈原传说", "端午节与纪念屈原的传说关系密切。"],
+      ["文化常识", "节日地名", "寒食节", "介子推传说", "寒食节与介子推传说相关。"],
+      ["文化常识", "节日地名", "中秋节", "赏月团圆", "中秋节以赏月、团圆等习俗著称。"],
+      ["文化常识", "节日地名", "重阳节", "登高赏菊", "重阳节有登高、赏菊等传统习俗。"],
+      ["文化常识", "节日地名", "南京", "金陵古称", "南京历史上有金陵、建康等古称。"],
+      ["文化常识", "节日地名", "西安", "长安古称", "长安是西安的重要古称。"],
+      ["文化常识", "节日地名", "开封", "汴京古称", "北宋都城汴京即今河南开封。"],
+      ["文化常识", "节日地名", "杭州", "临安古称", "南宋都城临安即今杭州。"]
+    ];
+
+    const ROUND_SIZE = 10;
+
+    function generatedOptions(items, answer, offset, fieldIndex) {
+      const unique = [...new Set(items.map((item) => item[fieldIndex]).filter((value) => value !== answer))];
+      const rotated = unique.slice(offset % Math.max(unique.length, 1)).concat(unique.slice(0, offset % Math.max(unique.length, 1)));
+      const picks = shuffled(rotated).slice(0, 3);
+      const insertAt = offset % 4;
+      picks.splice(insertAt, 0, answer);
+      return { options: picks, answer: insertAt };
+    }
+
+    function hasFourUniqueOptions(question) {
+      return question.options.length === 4 && new Set(question.options).size === 4;
+    }
+
+    function buildPairQuestions() {
+      const generated = [];
+      const groups = pairFacts.reduce((map, fact) => {
+        const key = fact[1];
+        if (!map.has(key)) map.set(key, []);
+        map.get(key).push(fact);
+        return map;
+      }, new Map());
+
+      pairFacts.forEach((fact, factIndex) => {
+        const [era, topic, subject, relation, explain] = fact;
+        const sameTopic = groups.get(topic);
+        const direct = generatedOptions(sameTopic, relation, factIndex, 3);
+        generated.push({
+          era,
+          topic,
+          text: `“${subject}”最适合对应下列哪一项？`,
+          options: direct.options,
+          answer: direct.answer,
+          explain
+        });
+
+        const reverse = generatedOptions(sameTopic, subject, factIndex + 3, 2);
+        generated.push({
+          era,
+          topic,
+          text: `下列哪一项与“${relation}”关系最密切？`,
+          options: reverse.options,
+          answer: reverse.answer,
+          explain
+        });
+
+        for (let variant = 0; variant < 10; variant += 1) {
+          const wrongPairs = [];
+          for (let step = 1; step <= sameTopic.length && wrongPairs.length < 3; step += 1) {
+            const other = sameTopic[(factIndex + variant + step) % sameTopic.length];
+            if (other[2] !== subject && other[3] !== relation) {
+              wrongPairs.push(`${other[2]} — ${relation}`);
+            }
+          }
+          const correctPair = `${subject} — ${relation}`;
+          const answerIndex = (factIndex + variant) % 4;
+          const options = wrongPairs.slice(0, 3);
+          options.splice(answerIndex, 0, correctPair);
+          generated.push({
+            era,
+            topic,
+            text: "下列哪一组历史文化搭配正确？",
+            options,
+            answer: answerIndex,
+            explain
+          });
+        }
+      });
+
+      return generated.filter(hasFourUniqueOptions);
+    }
+
+    const questionBank = [...baseQuestions, ...buildPairQuestions()].filter(hasFourUniqueOptions);
+
+    function shuffled(items) {
+      return items
+        .map((item) => ({ item, sort: Math.random() }))
+        .sort((a, b) => a.sort - b.sort)
+        .map(({ item }) => item);
+    }
+
+    function pickQuestions() {
+      const pairingQuestions = questionBank.filter((question) => question.text.includes("搭配正确"));
+      const variedQuestions = questionBank.filter((question) => !question.text.includes("搭配正确"));
+      const baseSet = new Set(baseQuestions);
+      const basePool = shuffled(variedQuestions.filter((question) => baseSet.has(question)));
+      const generatedPool = shuffled(variedQuestions.filter((question) => !baseSet.has(question)));
+      const pairingPool = shuffled(pairingQuestions);
+      const selected = [
+        ...basePool.slice(0, 4),
+        ...generatedPool.slice(0, 5),
+        ...pairingPool.slice(0, 1)
+      ];
+
+      if (selected.length < ROUND_SIZE) {
+        const used = new Set(selected);
+        const fallback = shuffled(questionBank.filter((question) => !used.has(question)));
+        selected.push(...fallback.slice(0, ROUND_SIZE - selected.length));
+      }
+
+      return shuffled(selected).slice(0, ROUND_SIZE);
+    }
+
+    let questions = pickQuestions();
+
+    const levels = [
+      {
+        min: 0,
+        title: "史门试剑",
+        comment: "这一轮像是刚摸到城门的铜环：有些线索已经亮了，但还没连成地图。再来一轮，先盯住朝代、人物和制度三类题，分数会涨得很快。"
+      },
+      {
+        min: 4,
+        title: "典故捕手",
+        comment: "你已经能抓住不少关键名词，像在展厅里认出了好几件镇馆之宝。距离高阶称号只差一点稳定性，再刷一局很可能直接跃升。"
+      },
+      {
+        min: 7,
+        title: "通史巡游者",
+        comment: "你的知识脉络已经很顺，制度、人物、文学和器物能互相照应。下一轮目标很明确：把犹豫题变成秒答题，冲击九分以上。"
+      },
+      {
+        min: 9,
+        title: "殿前一问",
+        comment: "九分已经很强，说明你只差最后一道门槛。现在最有意思的不是证明你懂历史，而是把那一道失手题追回来，冲击十题全中。"
+      },
+      {
+        min: 10,
+        title: "国史灯火守望者",
+        comment: "十题全中，最高称号解锁。你像是把一条通史长廊从头走到尾，还能在每个展柜前说出门道。可以再开一轮随机题，看看这盏灯能不能一直亮着。"
+      }
+    ];
+
+    const state = {
+      index: 0,
+      score: 0,
+      selected: [],
+      locked: false
+    };
+
+    const $ = (id) => document.getElementById(id);
+    const questionText = $("questionText");
+    const optionsEl = $("options");
+    const explainEl = $("explain");
+    const progressBar = $("progressBar");
+    const countText = $("countText");
+    const nextBtn = $("nextBtn");
+    const restartBtn = $("restartBtn");
+    const againBtn = $("againBtn");
+    const quizEl = $("quiz");
+    const resultEl = $("result");
+
+    function renderQuestion() {
+      const question = questions[state.index];
+      state.locked = false;
+      $("eraTag").textContent = question.era;
+      $("topicTag").textContent = question.topic;
+      questionText.textContent = question.text;
+      explainEl.textContent = "请选择一个答案。每题答完会给出一句解释。";
+      nextBtn.disabled = true;
+      nextBtn.textContent = state.index === questions.length - 1 ? "查看结果" : "下一题";
+      countText.textContent = `第 ${state.index + 1} / ${questions.length} 题`;
+      progressBar.style.width = `${(state.index / questions.length) * 100}%`;
+      optionsEl.innerHTML = "";
+
+      question.options.forEach((option, optionIndex) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "option";
+        button.innerHTML = `<span class="letter">${String.fromCharCode(65 + optionIndex)}</span><span>${option}</span>`;
+        button.addEventListener("click", () => chooseOption(optionIndex));
+        optionsEl.appendChild(button);
+      });
+    }
+
+    function chooseOption(optionIndex) {
+      if (state.locked) return;
+      const question = questions[state.index];
+      const isCorrect = optionIndex === question.answer;
+      state.locked = true;
+      state.selected[state.index] = optionIndex;
+      if (isCorrect) state.score += 1;
+
+      [...optionsEl.children].forEach((button, index) => {
+        button.disabled = true;
+        if (index === question.answer) button.classList.add("correct");
+        if (index === optionIndex && !isCorrect) button.classList.add("wrong");
+      });
+
+      explainEl.textContent = `${isCorrect ? "答对了。" : "这题惜败。"}${question.explain}`;
+      nextBtn.disabled = false;
+      progressBar.style.width = `${((state.index + 1) / questions.length) * 100}%`;
+    }
+
+    function nextStep() {
+      if (state.index < questions.length - 1) {
+        state.index += 1;
+        renderQuestion();
+      } else {
+        showResult();
+      }
+    }
+
+    function getLevel(score) {
+      return levels.reduce((best, level) => score >= level.min ? level : best, levels[0]);
+    }
+
+    function showResult() {
+      const level = getLevel(state.score);
+      quizEl.classList.add("hidden");
+      resultEl.classList.add("show");
+      $("scoreNum").textContent = `${state.score}/${questions.length}`;
+      $("levelText").textContent = level.title;
+      $("commentText").textContent = level.comment;
+
+      const breakdown = $("breakdown");
+      breakdown.innerHTML = "";
+      const summary = document.createElement("li");
+      summary.innerHTML = `<strong>本轮回顾</strong>：点击“再测一次”会开启新的挑战，满分称号只留给十题全中的一轮。`;
+      breakdown.appendChild(summary);
+      questions.forEach((question, index) => {
+        const selected = state.selected[index];
+        const item = document.createElement("li");
+        const result = selected === question.answer ? "正确" : "未中";
+        item.innerHTML = `<strong>${index + 1}. ${result}</strong>：${question.text}<br>答案：${question.options[question.answer]}`;
+        breakdown.appendChild(item);
+      });
+    }
+
+    function restart() {
+      questions = pickQuestions();
+      state.index = 0;
+      state.score = 0;
+      state.selected = [];
+      state.locked = false;
+      quizEl.classList.remove("hidden");
+      resultEl.classList.remove("show");
+      renderQuestion();
+    }
+
+    nextBtn.addEventListener("click", nextStep);
+    restartBtn.addEventListener("click", restart);
+    againBtn.addEventListener("click", restart);
+    renderQuestion();
+  </script>
+</body>
+</html>
